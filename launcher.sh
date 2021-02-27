@@ -17,6 +17,14 @@ printHelp() {
   echo "No help for this provider"
 }
 
+postBackup() {
+  return 0
+}
+
+postRestore() {
+  return 0
+}
+
 # shellcheck disable=SC1090
 if [ -f "$1" ] && [ -r "$1" ]; then
   . "$1"
@@ -26,9 +34,9 @@ fi
 
 case "$1" in
   backup) shift
-    backup "$@";;
+    backup "$@" && postBackup "$@";;
   restore) shift
-    restore "$@";;
+    restore "$@" && postRestore "$@";;
   help) shift
     launcherHelp
     echo ""
