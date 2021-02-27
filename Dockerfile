@@ -4,7 +4,7 @@ RUN apk add restic \
     mysql-client \
     postgresql-client \
     openssh-client --no-cache \
-    && mkdir /backup-providers.d
+    && mkdir /backup-providers.d && mkdir /setup.d
 
 COPY *.sh /
 

@@ -7,6 +7,7 @@ else
 fi
 
 if [ "$1" = "backup" ]; then
+  /setup.sh || exit 1
   if /usr/bin/find "/backup-providers.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
     ERR_CODE=0
     for f in $(find "/backup-providers.d/" -follow -type f -print | sort -V); do
@@ -45,6 +46,7 @@ elif [ "$1" = "restore" ]; then
   [ -z "$backupProviderScript" ] && echo "No backup file specified" && exit 1
   shift # restore command
   shift # script name
+  /setup.sh || exit 1
 
   if [ -e "/backup-providers.d/$backupProviderScript" ]; then
     echo >&3 "Launching $backupProviderScript";

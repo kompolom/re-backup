@@ -92,7 +92,7 @@ docker-compose run --rm backup sh
 /launcher.sh /backup-providers.d/uploads-archive.sh restore uploads-latest.tar.gz
 ```
 
-### get help
+## Help
 
 To see help message pass 'help' command to launcher or run container with it command.
 
@@ -105,3 +105,7 @@ or manual:
 ```shell
 /launcher.sh help
 ```
+
+## Runtime setup
+
+Additional scripts may be run on container start. Place your scripts to `setup.d` and it will be executed before backup or restore tasks.
