@@ -1,6 +1,7 @@
 FROM rclone/rclone
 
 RUN apk add restic \
+    curl \
     mysql-client \
     postgresql-client \
     openssh-client --no-cache \
