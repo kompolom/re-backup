@@ -1,4 +1,4 @@
-FROM rclone/rclone
+FROM rclone/rclone:1.55
 
 RUN apk add restic \
     curl \
