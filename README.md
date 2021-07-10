@@ -103,7 +103,7 @@ docker-compose run --rm backup help
 or manual:
 
 ```shell
-/launcher.sh help
+launcher help
 ```
 
 ## Runtime setup

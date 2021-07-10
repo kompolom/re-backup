@@ -17,6 +17,14 @@ printHelp() {
   echo "No help for this provider"
 }
 
+preBackup() {
+  return 0
+}
+
+preRestore() {
+  return 0
+}
+
 postBackup() {
   return 0
 }
@@ -34,9 +42,9 @@ fi
 
 case "$1" in
   backup) shift
-    backup "$@" && postBackup "$@";;
+    preBackup "$@" && backup "$@" && postBackup "$@";;
   restore) shift
-    restore "$@" && postRestore "$@";;
+    preRestore "$@" && restore "$@" && postRestore "$@";;
   help) shift
     launcherHelp
     echo ""
