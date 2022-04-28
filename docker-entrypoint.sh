@@ -8,6 +8,27 @@ fi
 
 if [ "$1" = "backup" ]; then
   /setup.sh || exit 1
+  shift
+
+  # backup only specified
+  if [ -n "$1" ]; then
+    backupProviderScript="${1}.sh"
+    if [ -e "/backup-providers.d/$backupProviderScript" ]; then
+      echo >&3 "Launching $backupProviderScript";
+      if /launcher.sh "/backup-providers.d/$backupProviderScript" "backup" "$@"; then
+        echo >&3 "Success: $backupProviderScript"
+      else
+        ERR_CODE=$?
+        echo >&3 "Fail: $backupProviderScript. Error code: $ERR_CODE"
+        exit $ERR_CODE
+      fi
+    else
+      echo >&2 "Not found /backup-providers.d/$backupProviderScript"
+      exit 1
+    fi
+  fi
+
+  # backup all
   if /usr/bin/find "/backup-providers.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
     ERR_CODE=0
     for f in $(find "/backup-providers.d/" -follow -type f -print | sort -V); do
@@ -16,7 +37,7 @@ if [ "$1" = "backup" ]; then
           prettyF=${f##*/}
           if [ -x "$f" ]; then
             echo >&3 "Launching $prettyF";
-            if /launcher.sh "$f" "$@"; then
+            if /launcher.sh "$f" "backup"; then
               echo >&3 "Success: $prettyF"
             else
               ERR_CODE=$?
