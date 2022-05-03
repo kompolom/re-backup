@@ -1,10 +1,10 @@
-FROM rclone/rclone:1.55
+FROM postgres:14.2-alpine3.15
 
 COPY *.sh /
 RUN apk add restic \
+    rclone \
     curl \
     mysql-client \
-    postgresql-client \
     openssh-client --no-cache \
     && mkdir /backup-providers.d && mkdir /setup.d && \
     ln -s /launcher.sh /usr/local/bin/launcher && \
